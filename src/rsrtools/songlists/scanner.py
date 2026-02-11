@@ -147,7 +147,7 @@ def newer_songs(last_modified: float) -> bool:
             last_modified.
 
     """
-    if platform == "win32":
+    if platform in ("win32", "linux"):
         find_files = WIN_PSARC
     elif platform == "darwin":
         find_files = MAC_PSARC
@@ -483,7 +483,7 @@ class Scanner:
             scan_all = False
 
         # Gather paths to files we will scan for songs
-        if platform == "win32":
+        if platform in ("win32", "linux"):
             find_files = WIN_PSARC
         elif platform == "darwin":
             find_files = MAC_PSARC
