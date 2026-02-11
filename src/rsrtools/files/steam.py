@@ -211,6 +211,19 @@ class SteamAccounts:
                 print("I can't find the Steam installation path.")
                 raise
 
+        elif platform == "linux":
+            try:
+                ret_val = (
+                    Path.home()
+                    .joinpath(".steam").joinpath("steam")
+                    .resolve(strict=True)
+                )
+            except FileNotFoundError:
+                # Looks like we have no steam installation?
+                # Up to the user to decide what to do here.
+                print("I can't find the Steam installation path.")
+                raise
+
         elif platform == "darwin":
             # I believe this should work.
             try:
@@ -254,6 +267,9 @@ class SteamAccounts:
                     )
 
             for account, login_info in user_config.items():
+                # Set a default persona just in case it's not in the login_info dict
+                persona = ""
+
                 if account in user_dirs:
                     # We have account info and a user data folder exists
                     user_path = user_dirs[account]

@@ -441,6 +441,9 @@ class RSLocalProfiles(RSSaveWrapper):
                 LocalProfiles.json file. Typically a Rocksmith save directory.
         """
         file_path = remote_dir.joinpath(LOCAL_PROFILES).resolve()
+        if not file_path.exists():
+            # Retry init in lowercase for alternative platforms
+            file_path = remote_dir.joinpath(LOCAL_PROFILES.casefold()).resolve()
         super().__init__(file_path)
 
     def _profile_from_unique_id(
